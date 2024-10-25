@@ -1,0 +1,58 @@
+specVersion: 1.0.0
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: CookieJarFactory
+    network: {{network}}
+    source:
+      address: "{{address}}"
+      abi: CookieJarFactory
+      startBlock: {{startBlock}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - DonationReceived
+        - OwnershipTransferred
+        - SummonCookieJar
+      abis:
+        - name: CookieJarFactory
+          file: ./abis/CookieJarFactory.json
+      eventHandlers:
+        - event: DonationReceived(address,uint256)
+          handler: handleDonationReceived
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: SummonCookieJar(address,bytes,string,string)
+          handler: handleSummonCookieJar
+      file: ./src/cookie-jar-factory.ts
+templates:
+  - kind: ethereum/contract
+    name: CookieJarTemplate
+    network: {{network}}
+    source:
+      abi: CookieJar
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - CookieJar
+        - Claim
+        - Reason
+        - ReasonAssessment
+      abis:
+        - name: CookieJar
+          file: ./abis/CookieJar.json
+      eventHandlers:
+        - event: Setup(bytes)
+          handler: handleSetup
+        - event: GiveCookie(indexed bytes32,indexed address,uint256,string)
+          handler: handleGiveCookie
+        - event: AssessReason(indexed bytes32,string,bool)
+          handler: handleAssessReason
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+      file: ./src/cookieJar.ts

@@ -4,7 +4,11 @@
   "scripts": {
     "codegen": "graph codegen",
     "build": "graph build",
-    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ bitbeckers/cookie-graph-sepolia",
+    "deploy-sepolia": "graph deploy --node https://api.studio.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ --deploy-key $DEPLOY_KEY cj-sepolia subgraph.sepolia.yaml"
+    ,"deploy-base": "graph deploy --node https://api.studio.thegraph.com/deploy/ --deploy-key $DEPLOY_KEY subgraph.base.yaml",
+    "deploy-arbitrum": "graph deploy --node https://api.studio.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ --deploy-key $DEPLOY_KEY cj-arbitrum1 subgraph.arbitrum.yaml",
+    "deploy-gnosis": "graph deploy --node https://api.studio.thegraph.com/deploy/ --deploy-key $DEPLOY_KEY subgraph.gnosis.yaml",
+    "deploy-optimism": "graph deploy --node https://api.studio.thegraph.com/deploy/ --deploy-key $DEPLOY_KEY subgraph.optimism.yaml",
     "create-local": "graph create --node http://localhost:8020/ bitbeckers/cookie-graph-sepolia",
     "remove-local": "graph remove --node http://localhost:8020/ bitbeckers/cookie-graph-sepolia",
     "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 bitbeckers/cookie-graph-sepolia",
@@ -13,7 +17,11 @@
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "0.67.3",
-    "@graphprotocol/graph-ts": "0.32.0"
+    "@graphprotocol/graph-ts": "0.32.0",
+    "dotenv": "^16.4.5",
+    "mustache": "^4.2.0"
   },
-  "devDependencies": { "matchstick-as": "0.5.0" }
+  "devDependencies": {
+    "matchstick-as": "0.5.0"
+  }
 }
